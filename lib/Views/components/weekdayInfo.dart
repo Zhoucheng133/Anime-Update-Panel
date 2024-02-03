@@ -1,4 +1,6 @@
 // ignore_for_file: file_names, camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables
+import 'dart:async';
+
 import 'package:fluent_ui/fluent_ui.dart';
 
 class weekdayInfo extends StatefulWidget {
@@ -13,14 +15,14 @@ class weekdayInfo extends StatefulWidget {
 class _weekdayInfoState extends State<weekdayInfo> {
 
   Future<void> addAnime(BuildContext context) async {
-    TextEditingController name=TextEditingController();
-    DateTime? updateDate;
 
+    TextEditingController name=TextEditingController();
+    int episode=1;
     
     final result = await showDialog<String>(
       context: context,
       builder: (context) => ContentDialog(
-        title: Text('添加一个番剧'),
+        title: Text('添加一个${widget.day}的番剧'),
         content: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState){
             return SizedBox(
@@ -43,17 +45,19 @@ class _weekdayInfoState extends State<weekdayInfo> {
                   ),
                   SizedBox(height: 30,),
                   Text(
-                    "更新时间",
+                    "已更新集数",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18
                     ),
                   ),
                   SizedBox(height: 10,),
-                  DatePicker(
-                    selected: updateDate,
-                    onChanged: (time) => setState(() => updateDate = time),
-                    showYear: false,
+                  NumberFormBox(
+                    value: episode,
+                    min: 1,
+                    onChanged: (value) => setState((){
+                      episode=value!;
+                    }),
                   )
                 ],
               ),
@@ -63,14 +67,13 @@ class _weekdayInfoState extends State<weekdayInfo> {
         actions: [
           Button(
             child: const Text('取消'),
-            onPressed: () {
-              Navigator.pop(context, 'User deleted file');
-              // Delete file here
-            },
+            onPressed: () => Navigator.pop(context, 'User canceled dialog'),
           ),
           FilledButton(
             child: const Text('完成'),
-            onPressed: () => Navigator.pop(context, 'User canceled dialog'),
+            onPressed: (){
+              
+            },
           ),
         ],
       ),
