@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:anime_update_panel/Views/components/controlPanel.dart';
 import 'package:anime_update_panel/Views/components/weekdayInfo.dart';
 import 'package:flutter/material.dart';
 
@@ -27,6 +28,7 @@ class _InterfaceState extends State<Interface> {
           weekdayInfo(day: "星期五"),
           weekdayInfo(day: "星期六"),
           weekdayInfo(day: "星期日"),
+          controlPanel(),
         ],
       ),
     );
