@@ -12,6 +12,71 @@ class weekdayInfo extends StatefulWidget {
 
 class _weekdayInfoState extends State<weekdayInfo> {
 
+  Future<void> addAnime(BuildContext context) async {
+    TextEditingController name=TextEditingController();
+    DateTime? updateDate;
+
+    
+    final result = await showDialog<String>(
+      context: context,
+      builder: (context) => ContentDialog(
+        title: Text('添加一个番剧'),
+        content: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState){
+            return SizedBox(
+              height: 250,
+              width: 300,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "名称",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  TextBox(
+                    controller: name,
+                  ),
+                  SizedBox(height: 30,),
+                  Text(
+                    "更新时间",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  DatePicker(
+                    selected: updateDate,
+                    onChanged: (time) => setState(() => updateDate = time),
+                    showYear: false,
+                  )
+                ],
+              ),
+            );
+          }
+        ),
+        actions: [
+          Button(
+            child: const Text('取消'),
+            onPressed: () {
+              Navigator.pop(context, 'User deleted file');
+              // Delete file here
+            },
+          ),
+          FilledButton(
+            child: const Text('完成'),
+            onPressed: () => Navigator.pop(context, 'User canceled dialog'),
+          ),
+        ],
+      ),
+    );
+  }
+
   String getDayOfWeek(int day) {
     switch (day) {
       case 1:
@@ -68,7 +133,17 @@ class _weekdayInfoState extends State<weekdayInfo> {
                   color: Color.fromARGB(255, 0, 204, 144),
                   borderRadius: BorderRadius.circular(15),
                 ),
-              ) : Container()
+              ) : Container(),
+              Expanded(child: Container()),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: IconButton(
+                  icon: Icon(FluentIcons.add), 
+                  onPressed: (){
+                    addAnime(context);
+                  }
+                ),
+              )
             ],
           )
         ],
