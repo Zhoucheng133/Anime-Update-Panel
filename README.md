@@ -1,3 +1,1 @@
-# anime_update_panel
-
-A new Flutter project.
+# Anime Update Panel
