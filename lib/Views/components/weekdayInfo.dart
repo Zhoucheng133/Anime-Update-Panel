@@ -1,6 +1,7 @@
-// ignore_for_file: file_names, camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: file_names, camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables, invalid_use_of_protected_member
 import 'dart:async';
 
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get/get.dart';
 import 'package:anime_update_panel/Views/para/para.dart';
@@ -19,6 +20,13 @@ class _weekdayInfoState extends State<weekdayInfo> {
 
   final Controller c = Get.put(Controller());
 
+  final ScrollController scrollController=ScrollController();
+
+  Future<void> saveData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString("data", c.data.toString());
+  }
+
   int dayToInt(){
     switch (widget.day) {
       case '星期一':
@@ -35,7 +43,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
         return 6;
       case '星期日':
         return 7;
-      default: return 0;
+      default: return 1;
     }
   }
 
@@ -51,8 +59,12 @@ class _weekdayInfoState extends State<weekdayInfo> {
   }
 
   void addAnimateController(String name, int ep, int weekday){
-    var tmp=c.data;
-    
+    var tmp=c.data.value;
+    tmp[weekday-1].add(dataConvert(name, ep, weekday));
+    // print(tmp);
+    c.data.value=tmp;
+    print(c.data);
+    saveData();
   }
 
   Future<void> addAnime(BuildContext context) async {
@@ -195,6 +207,23 @@ class _weekdayInfoState extends State<weekdayInfo> {
                 ),
               )
             ],
+          ),
+          Expanded(
+            child: Obx(() => 
+              ListView.builder(
+                controller: scrollController,
+                itemCount: c.data[dayToInt()-1].length,
+                itemBuilder: (BuildContext context, int index){
+                  return Row(
+                    children: [
+                      Text(
+                        c.data[dayToInt()-1][index]["name"]
+                      )
+                    ],
+                  );
+                }
+              ),
+            )
           )
         ],
       ),

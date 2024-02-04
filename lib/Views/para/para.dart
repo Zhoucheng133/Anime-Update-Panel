@@ -17,6 +17,4 @@ class Controller extends GetxController{
     "name": "Hello world!",
   }
   */
-
-  void updateParaX(data) => data.value=data;
 }
