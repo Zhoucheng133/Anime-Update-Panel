@@ -329,7 +329,10 @@ class _weekdayInfoState extends State<weekdayInfo> {
                       ],
                     ),
                   );
-                }
+                }, 
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(height: 10);
+                },
               ),
             )
           )
