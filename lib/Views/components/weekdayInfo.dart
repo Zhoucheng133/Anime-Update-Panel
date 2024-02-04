@@ -62,8 +62,9 @@ class _weekdayInfoState extends State<weekdayInfo> {
   void addAnimateController(String name, int ep, int weekday){
     var tmp=c.data.value;
     tmp[weekday-1].add(dataConvert(name, ep, weekday));
-    // print(tmp);
-    c.data.value=tmp;
+    
+    c.updateData(tmp);
+
     print(c.data);
     saveData();
   }

@@ -17,4 +17,14 @@ class Controller extends GetxController{
     "name": "Hello world!",
   }
   */
+
+  void updateData(dataX){
+    data.value=[[],[],[],[],[],[],[]];
+    update();
+    refresh();
+    data.value=dataX;
+    print("updated!!");
+    update();
+    refresh();
+  }
 }
