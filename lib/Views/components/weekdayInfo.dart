@@ -50,7 +50,8 @@ class _weekdayInfoState extends State<weekdayInfo> {
   }
 
   Map dataConvert(String name, int ep, int weekday){
-    DateTime now = DateTime.now();
+    DateTime tmp=DateTime.now();
+    DateTime now = DateTime(tmp.year, tmp.month, tmp.day);
     int currentDayOfWeek = now.weekday;
     int daysToSubtract = currentDayOfWeek - weekday;
     int totalDaysToSubtract = ((ep-1) * 7) + daysToSubtract;
@@ -66,7 +67,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
 
     c.updateData(tmp);
 
-    print(c.data);
+    // print(c.data);
     saveData();
   }
 
@@ -164,7 +165,8 @@ class _weekdayInfoState extends State<weekdayInfo> {
   }
 
   bool checkToday(){
-    DateTime now = DateTime.now();
+    DateTime tmp=DateTime.now();
+    DateTime now = DateTime(tmp.year, tmp.month, tmp.day);
     if(widget.day==getDayOfWeek(now.weekday)){
       return true;
     }
@@ -174,7 +176,8 @@ class _weekdayInfoState extends State<weekdayInfo> {
   int calculateWeeksFromNow(String startTimeString) {
     DateFormat formatter = DateFormat('yyyy/MM/dd');
     DateTime startTime = formatter.parse(startTimeString);
-    DateTime currentDate = DateTime.now();
+    DateTime tmp=DateTime.now();
+    DateTime currentDate = DateTime(tmp.year, tmp.month, tmp.day);
 
     Duration difference = currentDate.difference(startTime);
     int daysPassed = difference.inDays;
