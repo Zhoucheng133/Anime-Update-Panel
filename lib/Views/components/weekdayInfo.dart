@@ -2,6 +2,9 @@
 import 'dart:async';
 
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:get/get.dart';
+import 'package:anime_update_panel/Views/para/para.dart';
+import 'package:intl/intl.dart';
 
 class weekdayInfo extends StatefulWidget {
   final String day;
@@ -14,12 +17,50 @@ class weekdayInfo extends StatefulWidget {
 
 class _weekdayInfoState extends State<weekdayInfo> {
 
+  final Controller c = Get.put(Controller());
+
+  int dayToInt(){
+    switch (widget.day) {
+      case '星期一':
+        return 1;
+      case '星期二':
+        return 2;
+      case '星期三': 
+        return 3;
+      case '星期四':
+        return 4;
+      case '星期五':
+        return 5;
+      case '星期六':
+        return 6;
+      case '星期日':
+        return 7;
+      default: return 0;
+    }
+  }
+
+  Map dataConvert(String name, int ep, int weekday){
+    DateTime now = DateTime.now();
+    int currentDayOfWeek = now.weekday;
+    int daysToSubtract = currentDayOfWeek - weekday;
+    int totalDaysToSubtract = ((ep-1) * 7) + daysToSubtract;
+    DateTime resultDate = now.subtract(Duration(days: totalDaysToSubtract));
+    String formattedDate = DateFormat('yyyy/MM/dd').format(resultDate);
+    Map<String, dynamic> result = {'name': name, 'updateDate': formattedDate};
+    return result;
+  }
+
+  void addAnimateController(String name, int ep, int weekday){
+    var tmp=c.data;
+    
+  }
+
   Future<void> addAnime(BuildContext context) async {
 
     TextEditingController name=TextEditingController();
     int episode=1;
     
-    final result = await showDialog<String>(
+    await showDialog<String>(
       context: context,
       builder: (context) => ContentDialog(
         title: Text('添加一个${widget.day}的番剧'),
@@ -67,12 +108,18 @@ class _weekdayInfoState extends State<weekdayInfo> {
         actions: [
           Button(
             child: const Text('取消'),
-            onPressed: () => Navigator.pop(context, 'User canceled dialog'),
+            onPressed: () => Navigator.pop(context),
           ),
           FilledButton(
             child: const Text('完成'),
             onPressed: (){
-              
+              if(name.text.isEmpty){
+                return;
+              }else{
+                addAnimateController(name.text, episode, dayToInt());
+                Navigator.pop(context);
+                return;
+              }
             },
           ),
         ],
