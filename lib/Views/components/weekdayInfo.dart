@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables, invalid_use_of_protected_member
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -24,7 +25,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
 
   Future<void> saveData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString("data", c.data.toString());
+    await prefs.setString("data", jsonEncode(c.data));
   }
 
   int dayToInt(){

@@ -1,10 +1,13 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:convert';
+
 import 'package:anime_update_panel/Views/interface.dart';
 import 'package:anime_update_panel/Views/para/para.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flutter/material.dart';
 
 void main() {
@@ -42,12 +45,12 @@ class _MainAppState extends State<MainApp> {
   final Controller c = Get.put(Controller());
   
   Future<void> getData() async {
-    // final SharedPreferences prefs = await SharedPreferences.getInstance();
-    // final String? data = prefs.getString('data');
-    // if(data!=null){
-    //   var dataSaved=jsonDecode(data);
-    //   c.updateData(dataSaved);
-    // }
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? data = prefs.getString('data');
+    if(data!=null){
+      var dataSaved=jsonDecode(data);
+      c.data.value=dataSaved.cast<List<dynamic>>();
+    }
   }
 
   @override
