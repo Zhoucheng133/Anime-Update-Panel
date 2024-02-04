@@ -24,8 +24,9 @@ class _controlPanelState extends State<controlPanel> {
             FluentIcons.app_icon_default_edit,
             size: 20,
           ),
+          SizedBox(height: 15,),
           Button(
-            child: Text("测试按钮"), 
+            child: Text("清除所有的数据"), 
             onPressed: () async {
               final SharedPreferences prefs = await SharedPreferences.getInstance();
               await prefs.remove('data');
