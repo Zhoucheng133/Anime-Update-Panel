@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables, invalid_use_of_protected_member
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluent_ui/fluent_ui.dart';
@@ -62,7 +63,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
   void addAnimateController(String name, int ep, int weekday){
     var tmp=c.data.value;
     tmp[weekday-1].add(dataConvert(name, ep, weekday));
-    
+
     c.updateData(tmp);
 
     print(c.data);
@@ -170,6 +171,18 @@ class _weekdayInfoState extends State<weekdayInfo> {
     return false;
   }
 
+  String calculateWeeksFromNow(String startTimeString) {
+    DateFormat formatter = DateFormat('yyyy/MM/dd');
+    DateTime startTime = formatter.parse(startTimeString);
+    DateTime currentDate = DateTime.now();
+
+    Duration difference = currentDate.difference(startTime);
+    int daysPassed = difference.inDays;
+    int weeksPassed = (daysPassed / 7).floor(); // 向下取整
+
+    return (max(weeksPassed, 0)+1).toString(); // 确保返回的星期数不为负数
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -186,7 +199,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
                 widget.day,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 20
+                  fontSize: 22
                 ),
               ),
               SizedBox(width: 15,),
@@ -210,6 +223,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
               )
             ],
           ),
+          SizedBox(height: 15,),
           Expanded(
             child: Obx(() => 
               ListView.builder(
@@ -218,9 +232,26 @@ class _weekdayInfoState extends State<weekdayInfo> {
                 itemBuilder: (BuildContext context, int index){
                   return Row(
                     children: [
+                      Expanded(
+                        child: Text(
+                          c.data[dayToInt()-1][index]["name"],
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color.fromARGB(255, 100, 100, 100)
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                       Text(
-                        c.data[dayToInt()-1][index]["name"]
-                      )
+                        calculateWeeksFromNow(c.data[dayToInt()-1][index]["updateDate"]),
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color.fromARGB(255, 100, 100, 100)
+                        ),
+                        maxLines: 1,
+                      ),
+                      SizedBox(width: 5,)
                     ],
                   );
                 }
