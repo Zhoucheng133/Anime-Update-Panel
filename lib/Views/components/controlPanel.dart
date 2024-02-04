@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
 import 'package:fluent_ui/fluent_ui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:flutter/material.dart';
 
 class controlPanel extends StatefulWidget {
@@ -23,6 +24,13 @@ class _controlPanelState extends State<controlPanel> {
             FluentIcons.app_icon_default_edit,
             size: 20,
           ),
+          Button(
+            child: Text("测试按钮"), 
+            onPressed: () async {
+              final SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.remove('data');
+            }
+          )
         ],
       ),
     );
