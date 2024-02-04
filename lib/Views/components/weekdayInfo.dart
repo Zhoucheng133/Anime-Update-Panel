@@ -196,7 +196,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
         content: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState){
             return SizedBox(
-              height: 250,
+              height: 270,
               width: 300,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -228,6 +228,31 @@ class _weekdayInfoState extends State<weekdayInfo> {
                     onChanged: (value) => setState((){
                       episode=value!;
                     }),
+                  ),
+                  SizedBox(height: 30,),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FilledButton(
+                          style: ButtonStyle(
+                            backgroundColor: ButtonState.resolveWith((states){
+                              if (states.isPressing) {
+                                return Color.fromARGB(255, 190, 0, 0); // 按下时的颜色
+                              } else {
+                                return Colors.red; // 默认颜色
+                              }
+                            })
+                          ),
+                          child: Text("删除"), 
+                          onPressed: (){
+                            var tmp=c.data.value;
+                            tmp[dayToInt()-1].removeAt(index);
+                            c.updateData(tmp);
+                            Navigator.pop(context);
+                          }
+                        ),
+                      ),
+                    ],
                   )
                 ],
               ),
@@ -296,7 +321,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
           SizedBox(height: 15,),
           Expanded(
             child: Obx(() => 
-              ListView.builder(
+              ListView.separated(
                 controller: scrollController,
                 itemCount: c.data[dayToInt()-1].length,
                 itemBuilder: (BuildContext context, int index){
