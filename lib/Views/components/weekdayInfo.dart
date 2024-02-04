@@ -171,7 +171,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
     return false;
   }
 
-  String calculateWeeksFromNow(String startTimeString) {
+  int calculateWeeksFromNow(String startTimeString) {
     DateFormat formatter = DateFormat('yyyy/MM/dd');
     DateTime startTime = formatter.parse(startTimeString);
     DateTime currentDate = DateTime.now();
@@ -180,7 +180,77 @@ class _weekdayInfoState extends State<weekdayInfo> {
     int daysPassed = difference.inDays;
     int weeksPassed = (daysPassed / 7).floor(); // 向下取整
 
-    return (max(weeksPassed, 0)+1).toString(); // 确保返回的星期数不为负数
+    return max(weeksPassed, 0)+1; // 确保返回的星期数不为负数
+  }
+
+  Future<void> editAnime(val, int index) async {
+
+    var name=TextEditingController();
+    name.text=val["name"];
+    var episode=calculateWeeksFromNow(val["updateDate"]);
+
+    await showDialog<String>(
+      context: context,
+      builder: (context) => ContentDialog(
+        title: Text('修改番剧信息'),
+        content: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState){
+            return SizedBox(
+              height: 250,
+              width: 300,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "名称",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  TextBox(
+                    controller: name,
+                  ),
+                  SizedBox(height: 30,),
+                  Text(
+                    "已更新集数",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  NumberFormBox(
+                    value: episode,
+                    min: 1,
+                    onChanged: (value) => setState((){
+                      episode=value!;
+                    }),
+                  )
+                ],
+              ),
+            );
+          }
+        ),
+        actions: [
+          Button(
+            child: const Text('取消'),
+            onPressed: () => Navigator.pop(context),
+          ),
+          FilledButton(
+            child: const Text('完成'),
+            onPressed: (){
+              var tmp=c.data.value;
+              tmp[dayToInt()-1][index]=dataConvert(name.text, episode, dayToInt());
+              c.updateData(tmp);
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -230,29 +300,34 @@ class _weekdayInfoState extends State<weekdayInfo> {
                 controller: scrollController,
                 itemCount: c.data[dayToInt()-1].length,
                 itemBuilder: (BuildContext context, int index){
-                  return Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          c.data[dayToInt()-1][index]["name"],
+                  return GestureDetector(
+                    onTap: (){
+                      editAnime(c.data[dayToInt()-1][index], index);
+                    },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            c.data[dayToInt()-1][index]["name"],
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Color.fromARGB(255, 100, 100, 100)
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Text(
+                          calculateWeeksFromNow(c.data[dayToInt()-1][index]["updateDate"]).toString(),
                           style: TextStyle(
                             fontSize: 16,
                             color: Color.fromARGB(255, 100, 100, 100)
                           ),
                           maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
-                      Text(
-                        calculateWeeksFromNow(c.data[dayToInt()-1][index]["updateDate"]),
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Color.fromARGB(255, 100, 100, 100)
-                        ),
-                        maxLines: 1,
-                      ),
-                      SizedBox(width: 5,)
-                    ],
+                        SizedBox(width: 5,)
+                      ],
+                    ),
                   );
                 }
               ),
