@@ -23,7 +23,7 @@ class Controller extends GetxController{
     update();
     refresh();
     data.value=dataX;
-    print("updated!!");
+    // print("updated!!");
     update();
     refresh();
   }
