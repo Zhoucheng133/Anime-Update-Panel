@@ -1,3 +1,3 @@
-# anime_update_panel
+# Anime Update Panel
 
-A new Flutter project.
+查看番剧更新时间和集数的工具
