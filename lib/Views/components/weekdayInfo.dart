@@ -54,6 +54,9 @@ class _weekdayInfoState extends State<weekdayInfo> {
     DateTime now = DateTime(tmp.year, tmp.month, tmp.day);
     int currentDayOfWeek = now.weekday;
     int daysToSubtract = currentDayOfWeek - weekday;
+    if(daysToSubtract<0){
+      daysToSubtract=7+daysToSubtract;
+    }
     int totalDaysToSubtract = ((ep-1) * 7) + daysToSubtract;
     DateTime resultDate = now.subtract(Duration(days: totalDaysToSubtract));
     String formattedDate = DateFormat('yyyy/MM/dd').format(resultDate);
