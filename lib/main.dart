@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:anime_update_panel/Views/interface.dart';
 import 'package:anime_update_panel/Views/para/para.dart';
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +12,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(MyApp());
+  doWhenWindowReady(() {
+    const initialSize = Size(1100, 770);
+    appWindow.minSize = initialSize;
+    appWindow.size = initialSize;
+    appWindow.alignment = Alignment.center;
+    appWindow.show();
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -60,7 +68,9 @@ class _MainAppState extends State<MainApp> {
           SizedBox(
             height: 30,
             width: MediaQuery.of(context).size.width,
-            child: Container(),
+            child: WindowTitleBarBox(
+              child: MoveWindow(),
+            ),
           ),
           Interface(),
         ],

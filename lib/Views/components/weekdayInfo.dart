@@ -109,7 +109,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
                     ),
                   ),
                   SizedBox(height: 10,),
-                  NumberFormBox(
+                  NumberBox(
                     value: episode,
                     min: 1,
                     onChanged: (value) => setState((){
@@ -225,7 +225,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
                     ),
                   ),
                   SizedBox(height: 10,),
-                  NumberFormBox(
+                  NumberBox(
                     value: episode,
                     min: 1,
                     onChanged: (value) => setState((){
