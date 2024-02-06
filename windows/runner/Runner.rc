@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "anime_update_panel" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "anime_update_panel" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2024 zhouc. All rights reserved." "\0"
             VALUE "OriginalFilename", "anime_update_panel.exe" "\0"
             VALUE "ProductName", "anime_update_panel" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"

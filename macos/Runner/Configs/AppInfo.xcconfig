@@ -8,7 +8,7 @@
 PRODUCT_NAME = Anime Update Panel
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.animeUpdatePanel
+PRODUCT_BUNDLE_IDENTIFIER = zhouc.animeUpdatePanel
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2024 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2024 zhouc. All rights reserved.
