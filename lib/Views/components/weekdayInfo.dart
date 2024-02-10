@@ -254,6 +254,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
                             var tmp=c.data.value;
                             tmp[dayToInt()-1].removeAt(index);
                             c.updateData(tmp);
+                            saveData();
                             Navigator.pop(context);
                           }
                         ),
