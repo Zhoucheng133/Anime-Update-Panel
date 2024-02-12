@@ -1,6 +1,7 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, camel_case_types
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:anime_update_panel/Views/interface.dart';
 import 'package:anime_update_panel/Views/para/para.dart';
@@ -69,12 +70,32 @@ class _MainAppState extends State<MainApp> {
             height: 30,
             width: MediaQuery.of(context).size.width,
             child: WindowTitleBarBox(
-              child: MoveWindow(),
+              child: Platform.isMacOS ? MoveWindow() : Row(
+                children: [
+                  Expanded(child: MoveWindow()),
+                  windowButtons(),
+                ],
+              ),
             ),
           ),
           Interface(),
         ],
       ),
+    );
+  }
+}
+
+class windowButtons extends StatelessWidget {
+  const windowButtons({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        MinimizeWindowButton(),
+        MaximizeWindowButton(),
+        CloseWindowButton(),
+      ],
     );
   }
 }
