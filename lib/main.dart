@@ -18,9 +18,10 @@ Future<void> main() async {
   WindowOptions windowOptions = WindowOptions(
     size: Size(1100, 770),
     center: true,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.transparent,
     skipTaskbar: false,
     titleBarStyle: TitleBarStyle.hidden,
+    title: "Anime Update Panel"
   );
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
