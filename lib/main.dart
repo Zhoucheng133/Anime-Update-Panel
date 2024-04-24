@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types, prefer_const_literals_to_create_immutables
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:anime_update_panel/Views/interface.dart';
 import 'package:anime_update_panel/Views/para/para.dart';
@@ -17,7 +18,7 @@ Future<void> main() async {
   WindowOptions windowOptions = WindowOptions(
     size: Size(1100, 770),
     center: true,
-    backgroundColor: Colors.transparent,
+    backgroundColor: Colors.white,
     skipTaskbar: false,
     titleBarStyle: TitleBarStyle.hidden,
   );
@@ -55,7 +56,7 @@ class MainApp extends StatefulWidget {
   State<MainApp> createState() => _MainAppState();
 }
 
-class _MainAppState extends State<MainApp> {
+class _MainAppState extends State<MainApp> with WindowListener {
 
   final Controller c = Get.put(Controller());
   
@@ -71,8 +72,45 @@ class _MainAppState extends State<MainApp> {
   @override
   void initState() {
     super.initState();
-    
     getData();
+  }
+
+  bool isMax=false;
+
+  @override
+  void onWindowMaximize(){
+    setState(() {
+      isMax=true;
+    });
+  }
+
+  @override
+  void onWindowUnmaximize() {
+    setState(() {
+      isMax=false;
+    });
+  }
+
+  void resizeWindow(){
+    setState(() {
+      isMax=false;
+    });
+    windowManager.restore();
+  }
+
+  void minWindow(){
+    windowManager.minimize();
+  }
+
+  void maxWindow(){
+    setState(() {
+      isMax=true;
+    });
+    windowManager.maximize();
+  }
+
+  void closeWindow(){
+    windowManager.close();
   }
 
   @override
@@ -81,7 +119,26 @@ class _MainAppState extends State<MainApp> {
       color: Colors.white,
       child: Column(
         children: [
-          SizedBox(height: 30,),
+          SizedBox(
+            height: 30,
+            child: Platform.isWindows ? Row(
+              children: [
+                Expanded(child: DragToMoveArea(child: Container(),)),
+                WindowCaptionButton.minimize(
+                  onPressed: () => minWindow(),
+                ),
+                !isMax ?
+                WindowCaptionButton.maximize(
+                  onPressed: () => maxWindow(),
+                ) : WindowCaptionButton.unmaximize(
+                  onPressed: () => resizeWindow(),
+                ),
+                WindowCaptionButton.close(
+                  onPressed: () => closeWindow(),
+                ),
+              ],
+            ) : Expanded(child: DragToMoveArea(child: Container(),)),
+          ),
           Interface(),
         ],
       )
