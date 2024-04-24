@@ -73,7 +73,14 @@ class _MainAppState extends State<MainApp> with WindowListener {
   @override
   void initState() {
     super.initState();
+    windowManager.addListener(this);
     getData();
+  }
+
+  @override
+  void dispose() {
+    windowManager.removeListener(this);
+    super.dispose();
   }
 
   bool isMax=false;
