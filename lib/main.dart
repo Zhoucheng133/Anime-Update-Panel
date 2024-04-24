@@ -1,12 +1,10 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types, prefer_const_literals_to_create_immutables
 
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:anime_update_panel/Views/interface.dart';
 import 'package:anime_update_panel/Views/para/para.dart';
 import 'package:fluent_ui/fluent_ui.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
