@@ -137,7 +137,7 @@ class _MainAppState extends State<MainApp> with WindowListener {
                   onPressed: () => closeWindow(),
                 ),
               ],
-            ) : Expanded(child: DragToMoveArea(child: Container(),)),
+            ) : DragToMoveArea(child: Container(),),
           ),
           Interface(),
         ],
