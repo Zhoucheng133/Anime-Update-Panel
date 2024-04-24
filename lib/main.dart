@@ -84,64 +84,6 @@ class _MainAppState extends State<MainApp> {
         children: [
           SizedBox(height: 30,),
           Interface(),
-          Platform.isMacOS ? PlatformMenuBar(
-            menus: [
-              PlatformMenu(
-                label: "netPlayer", 
-                menus: [
-                  PlatformMenuItemGroup(
-                    members: [
-                      PlatformProvidedMenuItem(
-                        enabled: true,
-                        type: PlatformProvidedMenuItemType.about,
-                      ),
-                    ]
-                  ),
-                  PlatformMenuItemGroup(
-                    members: [
-                      PlatformProvidedMenuItem(
-                        enabled: true,
-                        type: PlatformProvidedMenuItemType.hide,
-                      ),
-                      PlatformProvidedMenuItem(
-                        enabled: true,
-                        type: PlatformProvidedMenuItemType.quit,
-                      ),
-                    ]
-                  )
-                ]
-              ),
-              PlatformMenu(
-                label: "编辑",
-                menus: [
-                  PlatformMenuItem(
-                    label: "拷贝",
-                    shortcut: const SingleActivator(
-                      LogicalKeyboardKey.keyC,
-                      meta: true
-                    ),
-                    onSelected: (){}
-                  ),
-                  PlatformMenuItem(
-                    label: "粘贴",
-                    shortcut: const SingleActivator(
-                      LogicalKeyboardKey.keyV,
-                      meta: true
-                    ),
-                    onSelected: (){}
-                  ),
-                  PlatformMenuItem(
-                    label: "全选",
-                    shortcut: const SingleActivator(
-                      LogicalKeyboardKey.keyA,
-                      meta: true
-                    ),
-                    onSelected: (){}
-                  )
-                ]
-              ),
-            ]
-          ) : Container()
         ],
       )
     );
