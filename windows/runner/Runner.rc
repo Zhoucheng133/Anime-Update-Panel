@@ -90,7 +90,7 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "zhouc" "\0"
-            VALUE "FileDescription", "anime_update_panel" "\0"
+            VALUE "FileDescription", "Anime Update Panel" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "anime_update_panel" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 zhouc. All rights reserved." "\0"
