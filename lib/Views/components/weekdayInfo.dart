@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get/get.dart';
@@ -82,7 +83,10 @@ class _weekdayInfoState extends State<weekdayInfo> {
     await showDialog<String>(
       context: context,
       builder: (context) => ContentDialog(
-        title: Text('添加一个${widget.day}的番剧'),
+        title: Text(
+          '添加一个${widget.day}的番剧',
+          style: GoogleFonts.notoSansSc(),
+        ),
         content: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState){
             return SizedBox(
@@ -94,9 +98,10 @@ class _weekdayInfoState extends State<weekdayInfo> {
                 children: [
                   Text(
                     "名称",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18
+                    // style: GoogleFonts.notoSansSc(),
+                    style: GoogleFonts.notoSansSc(
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 16
                     ),
                   ),
                   SizedBox(height: 10,),
@@ -106,9 +111,9 @@ class _weekdayInfoState extends State<weekdayInfo> {
                   SizedBox(height: 30,),
                   Text(
                     "已更新集数",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18
+                    style: GoogleFonts.notoSansSc(
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 16
                     ),
                   ),
                   SizedBox(height: 10,),
@@ -126,11 +131,17 @@ class _weekdayInfoState extends State<weekdayInfo> {
         ),
         actions: [
           Button(
-            child: const Text('取消'),
+            child: Text(
+              '取消',
+              style: GoogleFonts.notoSansSc(),
+            ),
             onPressed: () => Navigator.pop(context),
           ),
           FilledButton(
-            child: const Text('完成'),
+            child: Text(
+              '完成',
+              style: GoogleFonts.notoSansSc()
+            ),
             onPressed: (){
               if(name.text.isEmpty){
                 return;
@@ -198,7 +209,10 @@ class _weekdayInfoState extends State<weekdayInfo> {
     await showDialog<String>(
       context: context,
       builder: (context) => ContentDialog(
-        title: Text('修改番剧信息'),
+        title: Text(
+          '修改番剧信息',
+          style: GoogleFonts.notoSansSc()
+        ),
         content: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState){
             return SizedBox(
@@ -210,9 +224,9 @@ class _weekdayInfoState extends State<weekdayInfo> {
                 children: [
                   Text(
                     "名称",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18
+                    style: GoogleFonts.notoSansSc(
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 16
                     ),
                   ),
                   SizedBox(height: 10,),
@@ -222,9 +236,9 @@ class _weekdayInfoState extends State<weekdayInfo> {
                   SizedBox(height: 30,),
                   Text(
                     "已更新集数",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18
+                    style: GoogleFonts.notoSansSc(
+                      // fontWeight: FontWeight.bold,
+                      fontSize: 16
                     ),
                   ),
                   SizedBox(height: 10,),
@@ -249,7 +263,10 @@ class _weekdayInfoState extends State<weekdayInfo> {
                               }
                             })
                           ),
-                          child: Text("删除"), 
+                          child: Text(
+                            "删除",
+                            style: GoogleFonts.notoSansSc(),
+                          ), 
                           onPressed: (){
                             var tmp=c.data.value;
                             tmp[dayToInt()-1].removeAt(index);
@@ -268,11 +285,17 @@ class _weekdayInfoState extends State<weekdayInfo> {
         ),
         actions: [
           Button(
-            child: const Text('取消'),
+            child: Text(
+              '取消',
+              style: GoogleFonts.notoSansSc(),
+            ),
             onPressed: () => Navigator.pop(context),
           ),
           FilledButton(
-            child: const Text('完成'),
+            child: Text(
+              '完成',
+              style: GoogleFonts.notoSansSc(),
+            ),
             onPressed: (){
               var tmp=c.data.value;
               tmp[dayToInt()-1][index]=dataConvert(name.text, episode, dayToInt());
@@ -300,7 +323,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
             children: [
               Text(
                 widget.day,
-                style: TextStyle(
+                style: GoogleFonts.notoSansSc(
                   fontWeight: FontWeight.bold,
                   fontSize: 22
                 ),
@@ -342,7 +365,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
                         Expanded(
                           child: Text(
                             c.data[dayToInt()-1][index]["name"],
-                            style: TextStyle(
+                            style: GoogleFonts.notoSansSc(
                               fontSize: 16,
                               color: Color.fromARGB(255, 100, 100, 100)
                             ),
@@ -352,7 +375,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
                         ),
                         Text(
                           calculateWeeksFromNow(c.data[dayToInt()-1][index]["updateDate"]).toString(),
-                          style: TextStyle(
+                          style: GoogleFonts.notoSansSc(
                             fontSize: 16,
                             color: Color.fromARGB(255, 100, 100, 100)
                           ),

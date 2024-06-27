@@ -2,6 +2,7 @@
 
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../para/para.dart';
@@ -22,17 +23,29 @@ class _controlPanelState extends State<controlPanel> {
     showDialog(
       context: context, 
       builder:  (context) => ContentDialog(
-        title: Text("清除所有数据"),
-        content: Text("确定要删除所有数据吗?"),
+        title: Text(
+          "清除所有数据",
+          style: GoogleFonts.notoSansSc(),
+        ),
+        content: Text(
+          "确定要删除所有数据吗?",
+          style: GoogleFonts.notoSansSc(),
+        ),
         actions: [
           Button(
-            child: const Text('取消'),
+            child: Text(
+              '取消',
+              style: GoogleFonts.notoSansSc(),
+            ),
             onPressed: () async {
               Navigator.pop(context);
             },
           ),
           FilledButton(
-            child: const Text('继续'),
+            child: Text(
+              '继续',
+              style: GoogleFonts.notoSansSc(),
+            ),
             style: ButtonStyle(
               backgroundColor: ButtonState.resolveWith((states){
                 if (states.isPressing) {
@@ -68,7 +81,10 @@ class _controlPanelState extends State<controlPanel> {
           ),
           SizedBox(height: 15,),
           Button(
-            child: Text("清除所有的数据"), 
+            child: Text(
+              "清除所有的数据",
+              style: GoogleFonts.notoSansSc(),
+            ), 
             onPressed: () {
               clearDialog();
             }

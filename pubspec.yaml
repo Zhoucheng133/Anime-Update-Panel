@@ -17,6 +17,7 @@ dependencies:
   window_manager: ^0.3.8
   flutter_localizations:
     sdk: flutter
+  google_fonts: ^6.2.1
 
 dev_dependencies:
   flutter_test:
