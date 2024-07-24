@@ -210,76 +210,44 @@ class _weekdayInfoState extends State<weekdayInfo> {
       context: context,
       builder: (context) => ContentDialog(
         title: Text(
-          '修改番剧信息',
+          '编辑番剧信息',
           style: GoogleFonts.notoSansSc()
         ),
         content: StatefulBuilder(
           builder: (BuildContext context, StateSetter setState){
-            return SizedBox(
-              height: 270,
-              width: 300,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "名称",
-                    style: GoogleFonts.notoSansSc(
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 16
-                    ),
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "名称",
+                  style: GoogleFonts.notoSansSc(
+                    // fontWeight: FontWeight.bold,
+                    fontSize: 16
                   ),
-                  SizedBox(height: 10,),
-                  TextBox(
-                    controller: name,
+                ),
+                SizedBox(height: 10,),
+                TextBox(
+                  controller: name,
+                ),
+                SizedBox(height: 30,),
+                Text(
+                  "已更新集数",
+                  style: GoogleFonts.notoSansSc(
+                    // fontWeight: FontWeight.bold,
+                    fontSize: 16
                   ),
-                  SizedBox(height: 30,),
-                  Text(
-                    "已更新集数",
-                    style: GoogleFonts.notoSansSc(
-                      // fontWeight: FontWeight.bold,
-                      fontSize: 16
-                    ),
-                  ),
-                  SizedBox(height: 10,),
-                  NumberBox(
-                    value: episode,
-                    min: 1,
-                    onChanged: (value) => setState((){
-                      episode=value!;
-                    }),
-                  ),
-                  SizedBox(height: 30,),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: FilledButton(
-                          style: ButtonStyle(
-                            backgroundColor: ButtonState.resolveWith((states){
-                              if (states.isPressing) {
-                                return Color.fromARGB(255, 190, 0, 0); // 按下时的颜色
-                              } else {
-                                return Colors.red; // 默认颜色
-                              }
-                            })
-                          ),
-                          child: Text(
-                            "删除",
-                            style: GoogleFonts.notoSansSc(),
-                          ), 
-                          onPressed: (){
-                            var tmp=c.data.value;
-                            tmp[dayToInt()-1].removeAt(index);
-                            c.updateData(tmp);
-                            saveData();
-                            Navigator.pop(context);
-                          }
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                ),
+                SizedBox(height: 10,),
+                NumberBox(
+                  value: episode,
+                  min: 1,
+                  onChanged: (value) => setState((){
+                    episode=value!;
+                  }),
+                ),
+              ],
             );
           }
         ),
@@ -306,6 +274,81 @@ class _weekdayInfoState extends State<weekdayInfo> {
           ),
         ],
       ),
+    );
+  }
+
+  void delHandler(val, int index){
+    showDialog(
+      context: context, 
+      builder: (BuildContext context)=>ContentDialog(
+        title: Text('删除番剧'),
+        content: Text('你确定要删除番剧: ${val['name']}吗? 这个操作无法撤销!'),
+        actions: [
+          Button(
+            child: Text(
+              '取消',
+              style: GoogleFonts.notoSansSc(),
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+          FilledButton(
+            style: ButtonStyle(
+                backgroundColor: ButtonState.resolveWith((states){
+                  if (states.isPressing) {
+                    return Color.fromARGB(255, 190, 0, 0); // 按下时的颜色
+                  } else {
+                    return Colors.red; // 默认颜色
+                  }
+                })
+              ),
+            child: Text(
+              '删除',
+              style: GoogleFonts.notoSansSc(),
+            ),
+            onPressed: (){
+              var tmp=c.data.value;
+              tmp[dayToInt()-1].removeAt(index);
+              c.updateData(tmp);
+              saveData();
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      )
+    );
+  }
+  
+  final menuController = FlyoutController();
+
+  void menu(val, index){
+    
+    menuController.showFlyout(
+      autoModeConfiguration: FlyoutAutoConfiguration(
+        preferredMode: FlyoutPlacementMode.bottomRight,
+      ),
+      builder: (context)=> MenuFlyout(items: [
+        MenuFlyoutItem(
+          leading: const Icon(FluentIcons.edit),
+          text: const Text('编辑'),
+          onPressed: () async {
+            Flyout.of(context).close;
+            Timer(const Duration(milliseconds: 200), (){
+              editAnime(val, index);
+            });
+          },
+        ),
+        MenuFlyoutItem(
+          leading: const Icon(FluentIcons.delete),
+          text: const Text('删除'),
+          // onPressed: Flyout.of(context).close,
+          onPressed: (){
+            Flyout.of(context).close;
+            Timer(const Duration(milliseconds: 200), (){
+              delHandler(val, index);
+            });
+          }
+        ),
+      ])
     );
   }
 
@@ -356,33 +399,37 @@ class _weekdayInfoState extends State<weekdayInfo> {
                 controller: scrollController,
                 itemCount: c.data[dayToInt()-1].length,
                 itemBuilder: (BuildContext context, int index){
-                  return GestureDetector(
-                    onTap: (){
-                      editAnime(c.data[dayToInt()-1][index], index);
-                    },
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            c.data[dayToInt()-1][index]["name"],
+                  return FlyoutTarget(
+                    controller: menuController,
+                    child: GestureDetector(
+                      onTap: (){
+                        editAnime(c.data[dayToInt()-1][index], index);
+                      },
+                      onSecondaryTap: () => menu(c.data[dayToInt()-1][index], index),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              c.data[dayToInt()-1][index]["name"],
+                              style: GoogleFonts.notoSansSc(
+                                fontSize: 16,
+                                color: Color.fromARGB(255, 100, 100, 100)
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Text(
+                            calculateWeeksFromNow(c.data[dayToInt()-1][index]["updateDate"]).toString(),
                             style: GoogleFonts.notoSansSc(
                               fontSize: 16,
                               color: Color.fromARGB(255, 100, 100, 100)
                             ),
                             maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
                           ),
-                        ),
-                        Text(
-                          calculateWeeksFromNow(c.data[dayToInt()-1][index]["updateDate"]).toString(),
-                          style: GoogleFonts.notoSansSc(
-                            fontSize: 16,
-                            color: Color.fromARGB(255, 100, 100, 100)
-                          ),
-                          maxLines: 1,
-                        ),
-                        SizedBox(width: 5,)
-                      ],
+                          SizedBox(width: 5,)
+                        ],
+                      ),
                     ),
                   );
                 }, 
