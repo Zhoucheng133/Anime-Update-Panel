@@ -281,8 +281,14 @@ class _weekdayInfoState extends State<weekdayInfo> {
     showDialog(
       context: context, 
       builder: (BuildContext context)=>ContentDialog(
-        title: Text('删除番剧'),
-        content: Text('你确定要删除番剧: ${val['name']}吗? 这个操作无法撤销!'),
+        title: Text(
+          '删除番剧',
+          style: GoogleFonts.notoSansSc(),
+        ),
+        content: Text(
+          '你确定要删除番剧《${val['name']}》吗? 这个操作无法撤销!',
+          style: GoogleFonts.notoSansSc(),
+        ),
         actions: [
           Button(
             child: Text(
@@ -329,7 +335,10 @@ class _weekdayInfoState extends State<weekdayInfo> {
       builder: (context)=> MenuFlyout(items: [
         MenuFlyoutItem(
           leading: const Icon(FluentIcons.edit),
-          text: const Text('编辑'),
+          text: Text(
+            '编辑',
+            style: GoogleFonts.notoSansSc(),
+          ),
           onPressed: () async {
             Flyout.of(context).close;
             Timer(const Duration(milliseconds: 200), (){
@@ -339,7 +348,10 @@ class _weekdayInfoState extends State<weekdayInfo> {
         ),
         MenuFlyoutItem(
           leading: const Icon(FluentIcons.delete),
-          text: const Text('删除'),
+          text: Text(
+            '删除',
+            style: GoogleFonts.notoSansSc(),
+          ),
           // onPressed: Flyout.of(context).close,
           onPressed: (){
             Flyout.of(context).close;
