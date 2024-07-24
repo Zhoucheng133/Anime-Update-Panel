@@ -1,4 +1,5 @@
-// ignore_for_file: file_names, camel_case_types, prefer_const_constructors, prefer_const_literals_to_create_immutables, invalid_use_of_protected_member
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
@@ -10,16 +11,16 @@ import 'package:get/get.dart';
 import 'package:anime_update_panel/Views/para/para.dart';
 import 'package:intl/intl.dart';
 
-class weekdayInfo extends StatefulWidget {
+class WeekdayInfo extends StatefulWidget {
   final String day;
 
-  const weekdayInfo({super.key, required this.day});
+  const WeekdayInfo({super.key, required this.day});
 
   @override
-  State<weekdayInfo> createState() => _weekdayInfoState();
+  State<WeekdayInfo> createState() => _WeekdayInfoState();
 }
 
-class _weekdayInfoState extends State<weekdayInfo> {
+class _WeekdayInfoState extends State<WeekdayInfo> {
 
   final Controller c = Get.put(Controller());
 
@@ -104,11 +105,11 @@ class _weekdayInfoState extends State<weekdayInfo> {
                       fontSize: 16
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   TextBox(
                     controller: name,
                   ),
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 30,),
                   Text(
                     "已更新集数",
                     style: GoogleFonts.notoSansSc(
@@ -116,7 +117,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
                       fontSize: 16
                     ),
                   ),
-                  SizedBox(height: 10,),
+                  const SizedBox(height: 10,),
                   NumberBox(
                     value: episode,
                     min: 1,
@@ -227,11 +228,11 @@ class _weekdayInfoState extends State<weekdayInfo> {
                     fontSize: 16
                   ),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 TextBox(
                   controller: name,
                 ),
-                SizedBox(height: 30,),
+                const SizedBox(height: 30,),
                 Text(
                   "已更新集数",
                   style: GoogleFonts.notoSansSc(
@@ -239,7 +240,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
                     fontSize: 16
                   ),
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 NumberBox(
                   value: episode,
                   min: 1,
@@ -301,7 +302,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
             style: ButtonStyle(
                 backgroundColor: ButtonState.resolveWith((states){
                   if (states.isPressing) {
-                    return Color.fromARGB(255, 190, 0, 0); // 按下时的颜色
+                    return const Color.fromARGB(255, 190, 0, 0); // 按下时的颜色
                   } else {
                     return Colors.red; // 默认颜色
                   }
@@ -383,12 +384,12 @@ class _weekdayInfoState extends State<weekdayInfo> {
                   fontSize: 22
                 ),
               ),
-              SizedBox(width: 15,),
+              const SizedBox(width: 15,),
               checkToday()==true ? Container(
                 height: 15,
                 width: 15,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 0, 204, 144),
+                  color: const Color.fromARGB(255, 0, 204, 144),
                   borderRadius: BorderRadius.circular(15),
                 ),
               ) : Container(),
@@ -396,7 +397,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
               MouseRegion(
                 cursor: SystemMouseCursors.click,
                 child: IconButton(
-                  icon: Icon(FluentIcons.add), 
+                  icon: const Icon(FluentIcons.add), 
                   onPressed: (){
                     addAnime(context);
                   }
@@ -404,7 +405,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
               )
             ],
           ),
-          SizedBox(height: 15,),
+          const SizedBox(height: 15,),
           Expanded(
             child: Obx(() => 
               ListView.separated(
@@ -425,7 +426,7 @@ class _weekdayInfoState extends State<weekdayInfo> {
                               c.data[dayToInt()-1][index]["name"],
                               style: GoogleFonts.notoSansSc(
                                 fontSize: 16,
-                                color: Color.fromARGB(255, 100, 100, 100)
+                                color: const Color.fromARGB(255, 100, 100, 100)
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -435,18 +436,18 @@ class _weekdayInfoState extends State<weekdayInfo> {
                             calculateWeeksFromNow(c.data[dayToInt()-1][index]["updateDate"]).toString(),
                             style: GoogleFonts.notoSansSc(
                               fontSize: 16,
-                              color: Color.fromARGB(255, 100, 100, 100)
+                              color: const Color.fromARGB(255, 100, 100, 100)
                             ),
                             maxLines: 1,
                           ),
-                          SizedBox(width: 5,)
+                          const SizedBox(width: 5,)
                         ],
                       ),
                     ),
                   );
                 }, 
                 separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(height: 10);
+                  return const SizedBox(height: 10);
                 },
               ),
             )

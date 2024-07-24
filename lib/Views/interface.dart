@@ -1,7 +1,5 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'package:anime_update_panel/Views/components/controlPanel.dart';
-import 'package:anime_update_panel/Views/components/weekdayInfo.dart';
+import 'package:anime_update_panel/Views/components/control_panel.dart';
+import 'package:anime_update_panel/Views/components/weekday_info.dart';
 import 'package:flutter/material.dart';
 
 class Interface extends StatefulWidget {
@@ -20,15 +18,15 @@ class _InterfaceState extends State<Interface> {
           crossAxisCount: 4,
           childAspectRatio: MediaQuery.of(context).size.width/(2*(MediaQuery.of(context).size.height-30))
         ),
-        children: [
-          weekdayInfo(day: "星期一"),
-          weekdayInfo(day: "星期二"),
-          weekdayInfo(day: "星期三"),
-          weekdayInfo(day: "星期四"),
-          weekdayInfo(day: "星期五"),
-          weekdayInfo(day: "星期六"),
-          weekdayInfo(day: "星期日"),
-          controlPanel(),
+        children: const [
+          WeekdayInfo(day: "星期一"),
+          WeekdayInfo(day: "星期二"),
+          WeekdayInfo(day: "星期三"),
+          WeekdayInfo(day: "星期四"),
+          WeekdayInfo(day: "星期五"),
+          WeekdayInfo(day: "星期六"),
+          WeekdayInfo(day: "星期日"),
+          ControlPanel(),
         ],
       ),
     );

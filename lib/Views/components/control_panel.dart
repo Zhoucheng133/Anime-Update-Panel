@@ -1,5 +1,3 @@
-// ignore_for_file: camel_case_types, file_names, prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
-
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,14 +6,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../para/para.dart';
 // import 'package:flutter/material.dart';
 
-class controlPanel extends StatefulWidget {
-  const controlPanel({super.key});
+class ControlPanel extends StatefulWidget {
+  const ControlPanel({super.key});
 
   @override
-  State<controlPanel> createState() => _controlPanelState();
+  State<ControlPanel> createState() => _ControlPanelState();
 }
 
-class _controlPanelState extends State<controlPanel> {
+class _ControlPanelState extends State<ControlPanel> {
 
   final Controller c = Get.put(Controller());
 
@@ -42,14 +40,10 @@ class _controlPanelState extends State<controlPanel> {
             },
           ),
           FilledButton(
-            child: Text(
-              '继续',
-              style: GoogleFonts.notoSansSc(),
-            ),
             style: ButtonStyle(
               backgroundColor: ButtonState.resolveWith((states){
                 if (states.isPressing) {
-                  return Color.fromARGB(255, 190, 0, 0); // 按下时的颜色
+                  return const Color.fromARGB(255, 190, 0, 0); // 按下时的颜色
                 } else {
                   return Colors.red; // 默认颜色
                 }
@@ -61,6 +55,10 @@ class _controlPanelState extends State<controlPanel> {
               await prefs.remove('data');
               c.updateData([[],[],[],[],[],[],[]]);
             },
+            child: Text(
+              '继续',
+              style: GoogleFonts.notoSansSc(),
+            ),
           ),
         ],
       )
@@ -75,11 +73,11 @@ class _controlPanelState extends State<controlPanel> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
+          const Icon(
             FluentIcons.app_icon_default_edit,
             size: 20,
           ),
-          SizedBox(height: 15,),
+          const SizedBox(height: 15,),
           Button(
             child: Text(
               "清除所有的数据",
