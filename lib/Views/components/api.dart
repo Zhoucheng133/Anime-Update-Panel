@@ -5,7 +5,7 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart' as html_parser;
 // import 'package:http/http.dart' as http;
 
-class GetAPI{
+class API{
 
   final Controller c = Get.put(Controller());
 

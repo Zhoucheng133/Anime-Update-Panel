@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:anime_update_panel/Views/components/api.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -65,6 +68,43 @@ class _ControlPanelState extends State<ControlPanel> {
     );
   }
 
+  void showAll(){
+    showDialog(
+      context: context, 
+      builder: (context)=>ContentDialog(
+        title: Text(
+          '本季度番剧时刻表',
+          style: GoogleFonts.notoSansSc(),
+        ),
+        content: Obx(()=>
+          c.isloading.value ? const Center(
+            child: ProgressRing(),
+          ) : ListView(
+            children: [
+              Text(
+                '星期一',
+                style: GoogleFonts.notoSansSc(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          FilledButton(
+            child: Text(
+              '完成',
+              style: GoogleFonts.notoSansSc(),
+            ), onPressed: (){
+              Navigator.pop(context);
+            }
+          )
+        ],
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -78,6 +118,20 @@ class _ControlPanelState extends State<ControlPanel> {
             size: 20,
           ),
           const SizedBox(height: 15,),
+          FilledButton(
+            child: Text(
+              '本季度番剧时刻表',
+              style: GoogleFonts.notoSansSc(),
+            ), 
+            onPressed: () async {
+              c.isloading.value=true;
+              showAll();
+              await API().httpRequest();
+              // await Future.delayed(const Duration(seconds: 1));
+              c.isloading.value=false;
+            }
+          ),
+          const SizedBox(height: 10,),
           Button(
             child: Text(
               "清除所有的数据",
@@ -86,7 +140,8 @@ class _ControlPanelState extends State<ControlPanel> {
             onPressed: () {
               clearDialog();
             }
-          )
+          ),
+          const SizedBox(height: 10,),
         ],
       ),
     );

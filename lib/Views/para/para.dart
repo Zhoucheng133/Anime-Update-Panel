@@ -37,4 +37,6 @@ class Controller extends GetxController{
     [],
     [],
   ].obs;
+
+  RxBool isloading=false.obs;
 }
