@@ -27,4 +27,14 @@ class Controller extends GetxController{
     update();
     refresh();
   }
+
+  var all=[
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ].obs;
 }
