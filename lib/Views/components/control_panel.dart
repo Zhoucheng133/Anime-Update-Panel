@@ -1,5 +1,4 @@
-import 'dart:async';
-
+import 'package:anime_update_panel/Views/components/all_item.dart';
 import 'package:anime_update_panel/Views/components/api.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get/get.dart';
@@ -72,6 +71,7 @@ class _ControlPanelState extends State<ControlPanel> {
     showDialog(
       context: context, 
       builder: (context)=>ContentDialog(
+        constraints: const BoxConstraints(maxWidth: 600),
         title: Text(
           '本季度番剧时刻表',
           style: GoogleFonts.notoSansSc(),
@@ -80,14 +80,21 @@ class _ControlPanelState extends State<ControlPanel> {
           c.isloading.value ? const Center(
             child: ProgressRing(),
           ) : ListView(
-            children: [
-              Text(
-                '星期一',
-                style: GoogleFonts.notoSansSc(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22
-                ),
-              ),
+            children: const [
+              AllItemTitle(title: '星期一'),
+              AllItem(widgetIndex: 0),
+              AllItemTitle(title: '星期二'),
+              AllItem(widgetIndex: 1),
+              AllItemTitle(title: '星期三'),
+              AllItem(widgetIndex: 2),
+              AllItemTitle(title: '星期四'),
+              AllItem(widgetIndex: 3),
+              AllItemTitle(title: '星期五'),
+              AllItem(widgetIndex: 4),
+              AllItemTitle(title: '星期六'),
+              AllItem(widgetIndex: 5),
+              AllItemTitle(title: '星期日'),
+              AllItem(widgetIndex: 6),
             ],
           ),
         ),
