@@ -18,8 +18,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   google_fonts: ^6.2.1
-  xml: ^6.5.0
   http: ^1.2.2
+  html: ^0.15.4
 
 dev_dependencies:
   flutter_test:
