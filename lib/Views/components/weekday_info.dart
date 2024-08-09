@@ -248,6 +248,29 @@ class _WeekdayInfoState extends State<WeekdayInfo> {
                     episode=value!;
                   }),
                 ),
+                const SizedBox(height: 30,),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FilledButton(
+                        style: ButtonStyle(
+                          backgroundColor: ButtonState.resolveWith((states){
+                            if (states.isPressing) {
+                              return const Color.fromARGB(255, 190, 0, 0); // 按下时的颜色
+                            } else {
+                              return Colors.red; // 默认颜色
+                            }
+                          })
+                        ),
+                        child: const Text("删除"), 
+                        onPressed: (){
+                          Navigator.pop(context);
+                          delHandler(val, index);
+                        }
+                      ),
+                    ),
+                  ],
+                )
               ],
             );
           }
@@ -324,46 +347,6 @@ class _WeekdayInfoState extends State<WeekdayInfo> {
       )
     );
   }
-  
-  final menuController = FlyoutController();
-
-  void menu(val, index){
-    
-    menuController.showFlyout(
-      autoModeConfiguration: FlyoutAutoConfiguration(
-        preferredMode: FlyoutPlacementMode.bottomRight,
-      ),
-      builder: (context)=> MenuFlyout(items: [
-        MenuFlyoutItem(
-          leading: const Icon(FluentIcons.edit),
-          text: Text(
-            '编辑',
-            style: GoogleFonts.notoSansSc(),
-          ),
-          onPressed: () async {
-            Flyout.of(context).close;
-            Timer(const Duration(milliseconds: 200), (){
-              editAnime(val, index);
-            });
-          },
-        ),
-        MenuFlyoutItem(
-          leading: const Icon(FluentIcons.delete),
-          text: Text(
-            '删除',
-            style: GoogleFonts.notoSansSc(),
-          ),
-          // onPressed: Flyout.of(context).close,
-          onPressed: (){
-            Flyout.of(context).close;
-            Timer(const Duration(milliseconds: 200), (){
-              delHandler(val, index);
-            });
-          }
-        ),
-      ])
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -412,37 +395,33 @@ class _WeekdayInfoState extends State<WeekdayInfo> {
                 controller: scrollController,
                 itemCount: c.data[dayToInt()-1].length,
                 itemBuilder: (BuildContext context, int index){
-                  return FlyoutTarget(
-                    controller: menuController,
-                    child: GestureDetector(
-                      onTap: (){
-                        editAnime(c.data[dayToInt()-1][index], index);
-                      },
-                      onSecondaryTap: () => menu(c.data[dayToInt()-1][index], index),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              c.data[dayToInt()-1][index]["name"],
-                              style: GoogleFonts.notoSansSc(
-                                fontSize: 16,
-                                color: const Color.fromARGB(255, 100, 100, 100)
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Text(
-                            calculateWeeksFromNow(c.data[dayToInt()-1][index]["updateDate"]).toString(),
+                  return GestureDetector(
+                    onTap: (){
+                      editAnime(c.data[dayToInt()-1][index], index);
+                    },
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            c.data[dayToInt()-1][index]["name"],
                             style: GoogleFonts.notoSansSc(
                               fontSize: 16,
                               color: const Color.fromARGB(255, 100, 100, 100)
                             ),
                             maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(width: 5,)
-                        ],
-                      ),
+                        ),
+                        Text(
+                          calculateWeeksFromNow(c.data[dayToInt()-1][index]["updateDate"]).toString(),
+                          style: GoogleFonts.notoSansSc(
+                            fontSize: 16,
+                            color: const Color.fromARGB(255, 100, 100, 100)
+                          ),
+                          maxLines: 1,
+                        ),
+                        const SizedBox(width: 10,)
+                      ],
                     ),
                   );
                 }, 
