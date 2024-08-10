@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 class Controller extends GetxController{
+  String version='1.1.0';
   var data=[
     [],
     [],
