@@ -1,19 +1,19 @@
-import 'package:anime_update_panel/Views/components/test_data.dart';
+// import 'package:anime_update_panel/Views/components/test_data.dart';
 import 'package:anime_update_panel/Views/para/para.dart';
 import 'package:get/get.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' as html_parser;
-// import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as http;
 
 class API{
 
   final Controller c = Get.put(Controller());
 
   Future<void> httpRequest() async {
-    // final data=await http.get(Uri.parse("https://kisssub.org/addon.php?r=bangumi/table"));
-    // final document = html_parser.parse(data.body);
+    final data=await http.get(Uri.parse("https://kisssub.org/addon.php?r=bangumi/table"));
+    final document = html_parser.parse(data.body);
 
-    final document=html_parser.parse(TestData().html);
+    // final document=html_parser.parse(TestData().html);
     Element? bgmTableElement = document.getElementById('bgm-table');
     if (bgmTableElement != null) {
       List<Element> dlElements = bgmTableElement.querySelectorAll('dl');

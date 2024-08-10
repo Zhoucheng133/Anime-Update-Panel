@@ -1,5 +1,6 @@
 import 'package:anime_update_panel/Views/components/all_item.dart';
 import 'package:anime_update_panel/Views/components/api.dart';
+import 'package:anime_update_panel/Views/components/control_item.dart';
 import 'package:fluent_ui/fluent_ui.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -71,7 +72,7 @@ class _ControlPanelState extends State<ControlPanel> {
     showDialog(
       context: context, 
       builder: (context)=>ContentDialog(
-        constraints: const BoxConstraints(maxWidth: 600),
+        constraints: const BoxConstraints(maxWidth: 400, maxHeight: 500),
         title: Text(
           '本季度番剧时刻表',
           style: GoogleFonts.notoSansSc(),
@@ -82,19 +83,19 @@ class _ControlPanelState extends State<ControlPanel> {
           ) : ListView(
             children: const [
               AllItemTitle(title: '星期一'),
-              AllItem(widgetIndex: 0),
+              AllItem(widgetIndex: 0, day: '星期一',),
               AllItemTitle(title: '星期二'),
-              AllItem(widgetIndex: 1),
+              AllItem(widgetIndex: 1, day: '星期二',),
               AllItemTitle(title: '星期三'),
-              AllItem(widgetIndex: 2),
+              AllItem(widgetIndex: 2, day: '星期三',),
               AllItemTitle(title: '星期四'),
-              AllItem(widgetIndex: 3),
+              AllItem(widgetIndex: 3, day: '星期四',),
               AllItemTitle(title: '星期五'),
-              AllItem(widgetIndex: 4),
+              AllItem(widgetIndex: 4, day: '星期五',),
               AllItemTitle(title: '星期六'),
-              AllItem(widgetIndex: 5),
+              AllItem(widgetIndex: 5, day: '星期六',),
               AllItemTitle(title: '星期日'),
-              AllItem(widgetIndex: 6),
+              AllItem(widgetIndex: 6, day: '星期日',),
             ],
           ),
         ),
@@ -125,28 +126,23 @@ class _ControlPanelState extends State<ControlPanel> {
             size: 20,
           ),
           const SizedBox(height: 15,),
-          FilledButton(
-            child: Text(
-              '本季度番剧时刻表',
-              style: GoogleFonts.notoSansSc(),
-            ), 
-            onPressed: () async {
+          ControlItem(
+            func: () async {
               c.isloading.value=true;
               showAll();
               await API().httpRequest();
-              // await Future.delayed(const Duration(seconds: 1));
               c.isloading.value=false;
-            }
+            }, 
+            label: '本季度番剧表', 
+            icon: FluentIcons.table_computed
           ),
           const SizedBox(height: 10,),
-          Button(
-            child: Text(
-              "清除所有的数据",
-              style: GoogleFonts.notoSansSc(),
-            ), 
-            onPressed: () {
+          ControlItem(
+            func: () {
               clearDialog();
-            }
+            }, 
+            label: '清除所有数据', 
+            icon: FluentIcons.table_computed
           ),
           const SizedBox(height: 10,),
         ],
