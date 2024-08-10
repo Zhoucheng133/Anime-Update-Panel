@@ -121,9 +121,12 @@ class _ControlPanelState extends State<ControlPanel> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(
-            FluentIcons.app_icon_default_edit,
-            size: 20,
+          const Padding(
+            padding: EdgeInsets.only(left: 5),
+            child: Icon(
+              FluentIcons.app_icon_default_edit,
+              size: 20,
+            ),
           ),
           const SizedBox(height: 15,),
           ControlItem(
@@ -142,7 +145,7 @@ class _ControlPanelState extends State<ControlPanel> {
               clearDialog();
             }, 
             label: '清除所有数据', 
-            icon: FluentIcons.table_computed
+            icon: FluentIcons.delete
           ),
           const SizedBox(height: 10,),
         ],
