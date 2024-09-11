@@ -3,8 +3,6 @@ import 'dart:convert';
 
 import 'package:anime_update_panel/Views/para/para.dart';
 import 'package:get/get.dart';
-import 'package:html/dom.dart';
-import 'package:html/parser.dart' as html_parser;
 import 'package:http/http.dart' as http;
 
 class API{
@@ -16,29 +14,15 @@ class API{
     List<List<String>> ls = [];
     //c.all.value
     try {
-      final response = await http.get(Uri.parse("https://bgm.tv/calendar"));
+      final response = await http.get(Uri.parse("https://api.bgm.tv/calendar"));
       final decodedBody = utf8.decode(response.bodyBytes);
-      final document = html_parser.parse(decodedBody);
-      List<Element> weekElements = document.querySelectorAll('li.week');
-
-      for (var weekElement in weekElements) {
-        List<String> perLs = [];
-        List<Element> subLis = weekElement.querySelectorAll('li');
-
-        for (var subLi in subLis) {
-          Element? firstNav = subLi.querySelector('.nav');
-
-          if (firstNav != null && firstNav.innerHtml.isNotEmpty) {
-            perLs.add(firstNav.innerHtml);
-          } else {
-            Element? originalTitle = subLi.querySelector('em');
-
-            if (originalTitle != null && originalTitle.innerHtml.isNotEmpty) {
-              perLs.add(originalTitle.innerHtml);
-            }
-          }
+      List data=json.decode(decodedBody);
+      for(var i=0; i<data.length; i++){
+        List<String> p=[];
+        for(var j=0; j<data[i]['items'].length; j++){
+          p.add(data[i]['items'][j]["name_cn"].length==0 ? data[i]['items'][j]["name"] : data[i]['items'][j]["name_cn"]);
         }
-        ls.add(perLs);
+        ls.add(p);
       }
     } catch (_) {
       ls = [];
