@@ -10,9 +10,7 @@ class API{
   final Controller c = Get.put(Controller());
 
   Future<void> httpRequest() async {
-    // print(data.body);
     List<List<String>> ls = [];
-    //c.all.value
     try {
       final response = await http.get(Uri.parse("https://api.bgm.tv/calendar"));
       final decodedBody = utf8.decode(response.bodyBytes);
