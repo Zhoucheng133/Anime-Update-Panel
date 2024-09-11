@@ -1,4 +1,6 @@
 // import 'package:anime_update_panel/Views/components/test_data.dart';
+import 'dart:convert';
+
 import 'package:anime_update_panel/Views/para/para.dart';
 import 'package:get/get.dart';
 import 'package:html/dom.dart';
@@ -10,62 +12,37 @@ class API{
   final Controller c = Get.put(Controller());
 
   Future<void> httpRequest() async {
-    final data=await http.get(Uri.parse("https://kisssub.org/addon.php?r=bangumi/table"));
-    final document = html_parser.parse(data.body);
+    // print(data.body);
+    List<List<String>> ls = [];
+    //c.all.value
+    try {
+      final response = await http.get(Uri.parse("https://bgm.tv/calendar"));
+      final decodedBody = utf8.decode(response.bodyBytes);
+      final document = html_parser.parse(decodedBody);
+      List<Element> weekElements = document.querySelectorAll('li.week');
 
-    // final document=html_parser.parse(TestData().html);
-    Element? bgmTableElement = document.getElementById('bgm-table');
-    if (bgmTableElement != null) {
-      List<Element> dlElements = bgmTableElement.querySelectorAll('dl');
-      
-      var all=[
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-      ];
+      for (var weekElement in weekElements) {
+        List<String> perLs = [];
+        List<Element> subLis = weekElement.querySelectorAll('li');
 
-      for (var dl in dlElements) {
-        Element? dtElement = dl.querySelector('dt');
-        List<Element> ddElements = dl.querySelectorAll('dd');
+        for (var subLi in subLis) {
+          Element? firstNav = subLi.querySelector('.nav');
 
-        if (dtElement != null) {
-          if(!dtElement.text.contains('星期')){
-            break;
-          }
-          String title=dtElement.text;
-          int index=0;
-          if(title.contains('星期日')){
-            index=6;
-          }else if(title.contains('星期一')){
-            index=0;
-          }else if(title.contains('星期二')){
-            index=1;
-          }else if(title.contains('星期三')){
-            index=2;
-          }else if(title.contains('星期四')){
-            index=3;
-          }else if(title.contains('星期五')){
-            index=4;
-          }else if(title.contains('星期六')){
-            index=5;
-          }
-          for (var dd in ddElements) {
-            if(!dd.text.contains("←") &&  !dd.text.contains("→")){
-              all[index].add(dd.text.trim());
+          if (firstNav != null && firstNav.innerHtml.isNotEmpty) {
+            perLs.add(firstNav.innerHtml);
+          } else {
+            Element? originalTitle = subLi.querySelector('em');
+
+            if (originalTitle != null && originalTitle.innerHtml.isNotEmpty) {
+              perLs.add(originalTitle.innerHtml);
             }
           }
         }
-
+        ls.add(perLs);
       }
-      // print(all);
-      c.all.value=all;
-
-    } else {
-      // 请求失败
+    } catch (_) {
+      ls = [];
     }
+    c.all.value=ls;
   }
 }
