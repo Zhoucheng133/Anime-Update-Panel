@@ -177,7 +177,7 @@ class _ControlPanelState extends State<ControlPanel> {
             const SizedBox(height: 10,),
             GestureDetector(
               onTap: () async {
-                final Uri url = Uri.parse('https://kisssub.org/');
+                final Uri url = Uri.parse('https://bangumi.github.io/api/');
                 await launchUrl(url);
               },
               child: MouseRegion(
@@ -192,7 +192,7 @@ class _ControlPanelState extends State<ControlPanel> {
                     ),
                     const SizedBox(width: 5,),
                     Text(
-                      '番剧表信息来自kisssub.org',
+                      '番剧表信息来自bangumi',
                       style:  GoogleFonts.notoSansSc(),
                     )
                   ],
